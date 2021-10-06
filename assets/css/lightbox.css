@@ -98,7 +98,7 @@ html.lb-disable-scrolling {
 }
 
 .lb-nav a.lb-prev {
-  width: 34%;
+  width: 50%;
   left: 0;
   float: left;
   background: url(../images/prev.png) left 48% no-repeat;
