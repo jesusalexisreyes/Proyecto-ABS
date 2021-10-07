@@ -25,7 +25,7 @@ if (isset($_GET['btnbusqueda'])) {
 
 
 }
-$queryGetEquipo = "SELECT id, placas, marca, modelo, fecha_adquisicion, estatus, fecha_alta, color, combustible FROM equipo WHERE placas LIKE '%$valor%'  ORDER BY placas LIMIT $offset, $no_of_records_per_page ";
+$queryGetEquipo = "SELECT id, placas, marca, modelo, fecha_adquisicion, estatus, fecha_alta, color, combustible FROM equipo WHERE placas LIKE '%$valor%'  ORDER BY id LIMIT $offset, $no_of_records_per_page ";
 $resQueryGetEquipo = mysqli_query($connLocalhost, $queryGetEquipo) or trigger_error("There was an error getting the user data... please try again");
 
 $totalEquipo = mysqli_num_rows($resQueryGetEquipo);
@@ -88,28 +88,14 @@ $EquipoDetails = mysqli_fetch_assoc($resQueryGetEquipo);
       </div>
 
 
-      <!-- Modal -->
-      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel"><?php  echo  $_REQUEST['idEquipo']; ?></h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              ...
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-          </div>
-        </div>
-      </div>
 
       <section class="section about-me"style="width: 65%;" data-section="section1">
         <div class="container">
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<input type="button" name="e" value="e" id="idn1">
+<input type="button" name="e" value="e" id="idn2">
+<input type="button" name="e" value="e" id="idn3">
+<input type="button" name="e" value="e" id="idn4">
           <div class="section-heading">
 
             <h2>Registra equipos nuevos</h2>
@@ -130,7 +116,6 @@ $EquipoDetails = mysqli_fetch_assoc($resQueryGetEquipo);
 
               <thead>
                 <tr>
-id, placas, marca, modelo, fecha_adquisicion, estatus, fecha_alta, color, combustible
                   <th scope="col">Placas</th>
                   <th scope="col">Marca</th>
                   <th scope="col">Modelo</th>
@@ -149,14 +134,16 @@ id, placas, marca, modelo, fecha_adquisicion, estatus, fecha_alta, color, combus
                   <td><?php echo $EquipoDetails['modelo'] ?></td>
                   <td ><?php echo $EquipoDetails['estatus'] ?></td>
                   <td>
+              <!-- <button button class="alert alert-warning" type="submit" id="submit"data-toggle="modal" data-target="#formatoRpropiedades" >REGISTRAR</button> -->
+          <form  method="POST"  enctype="multipart/form-data" >
+          <input type="hidden" name="idp" value="<?php echo $EquipoDetails['id'] ?>" />
 
-                    <form id="submit-button" method="POST" action="listado_equipos.php">
-                      <input type="hidden" name="idEquipo" value="<?php echo $EquipoDetails['id'] ?>" />
 
-                      <input type="submit" data-bs-toggle="modal"  class="btn btn-secondary"value="Ver info"/>
+          <input type ="hidden" name="tabla"  value=" <?php echo 'propiedad' ?>"/>
+          <input type="submit" class="btn btn-danger" name="btneliminar" href="<?php echo "listado_equipos.php?valor=1".$EquipoDetails['estatus'] ?>" value="Eliminar" id="submit" data-toggle="modal"  data-target="#formatoRpropiedades"/>
 
           </td>
-                      </form>
+                   
                 </tr>
 
               </tbody>
@@ -195,33 +182,29 @@ id, placas, marca, modelo, fecha_adquisicion, estatus, fecha_alta, color, combus
       </section>
 
 
-
-
-    </div>
-
-
-
+ 
+        <?php include("includes/formatos/formatoEditarE.php");
+ ?>
 
 
 
-
-
-
-
+    </div> 
 
     <!-- Scripts -->
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-<script type="text/javascript">
-$(document).ready(function() {
-$('#submit-button').on('submit', function(e){
-    $('#exampleModal').modal('show');
-    e.preventDefault();
+    <script type="text/javascript">
+$(function() {
+ $(document).on('click', 'input[type="button"]', function(event) {
+    let id = this.id;
+  console.log("Se presionó el Boton con Id :"+ id)
+  });
 });
-});
+    
 </script>
+
     <script src="assets/js/isotope.min.js"></script>
     <script src="assets/js/owl-carousel.js"></script>
     <script src="assets/js/lightbox.js"></script>
