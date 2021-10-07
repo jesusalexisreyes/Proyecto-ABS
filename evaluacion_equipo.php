@@ -2,12 +2,41 @@
 include("conn/connLocalhost.php");
 
 
+
+if(isset($_POST['btnEditar'])) {
+
+
+  $estatus = $_REQUEST['inputEstatus'];
+ $id = $_REQUEST['inputId'];
+
+      // Definimos el query a ejecutar
+      $queryProUpdate = sprintf("UPDATE Equipo SET estatus = '%s' WHERE id = ".$id,
+        mysqli_real_escape_string($connLocalhost,trim($estatus))
+      );
+
+
+      // Ejecutamos el query y cachamos el resultado
+      $resQueryProUpdate = mysqli_query($connLocalhost, $queryProUpdate) or trigger_error("The user update query failed...");
+
+      // Redireccionamos al usuario si todo salio bien
+      if($resQueryProUpdate) {
+        header("Location:  evaluacion_equipo.php?equipoEdit=true");
+      }
+    }
+
+
+
+
+
+
+
+
 if (isset($_GET['pageno'])) {
     $pageno = $_GET['pageno'];
 } else {
     $pageno = 1;
 }
-$no_of_records_per_page = 5;
+$no_of_records_per_page = 10;
 $offset = ($pageno-1) * $no_of_records_per_page;
 
 
@@ -24,7 +53,7 @@ if (isset($_GET['btnbusqueda'])) {
 
 
 }
-$queryGetEquipo = "SELECT id, placas, marca, modelo, fecha_adquisicion, estatus, fecha_alta, color, combustible FROM equipo WHERE placas LIKE '%$valor%'  ORDER BY placas LIMIT $offset, $no_of_records_per_page ";
+$queryGetEquipo = "SELECT id, placas, marca, modelo, fecha_adquisicion, estatus, fecha_alta, color, combustible FROM equipo WHERE placas LIKE '%$valor%'  ORDER BY id LIMIT $offset, $no_of_records_per_page ";
 $resQueryGetEquipo = mysqli_query($connLocalhost, $queryGetEquipo) or trigger_error("There was an error getting the user data... please try again");
 
 $totalEquipo = mysqli_num_rows($resQueryGetEquipo);
@@ -80,6 +109,7 @@ $EquipoDetails = mysqli_fetch_assoc($resQueryGetEquipo);
               </ul>
             </nav>
 
+  
 
           </div>
         </div>
@@ -95,13 +125,25 @@ $EquipoDetails = mysqli_fetch_assoc($resQueryGetEquipo);
             <h2>Evaluacion de equipos</h2>
             <div class="line-dec"></div>
             <span>En esta seccion podras dar ver la informacion completa de los equipos.</span>
+
+                    <?php if(isset($_GET['equipoEdit']) ) {
+            if ($_GET['equipoEdit']==true) {
+              // code...
+
+
+           ?>
+           <div class="alert alert-warning alert-dismissible fade show">
+              <strong>Accion exitosa!</strong> Se ha modificado el Estatus exitosamente.
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+          </div>
+          <?php }    } ?>
           </div>
        <div class="right-image-post">
         <div class="" >
 
 
 
-          <div class="table-striped table-responsive table-sm "style=" border-radius: 9px; background: aliceblue; ">
+          <div class="table-striped table-responsive table-sm "style="padding: 10px; border-radius: 9px; background: aliceblue; ">
 
 
             <table  class="table table-striped breadcrumb-section "   >
@@ -110,16 +152,16 @@ $EquipoDetails = mysqli_fetch_assoc($resQueryGetEquipo);
 
               <thead>
                 <tr>
-id, placas, marca, modelo, fecha_adquisicion, estatus, fecha_alta, color, combustible
+
                   <th  scope="col">Id</th>
                   <th scope="col">Placas</th>
                   <th scope="col">Marca</th>
                   <th scope="col">Modelo</th>
                   <th scope="col">Fecha adquisicion</th>
-                  <th scope="col">Estatus</th>
                   <th scope="col">Fecha alta</th>
-                  <th scope="col">Color</th>
+                  <th scope="col">color</th>
                   <th scope="col">Combustible</th>
+                  <th style="width: 14%;"  scope="col">Estatus</th>
                   <th  scope="col">  &nbsp;&nbsp; &nbsp;&nbsp; Accion</th>
 
                 </tr>
@@ -134,21 +176,33 @@ id, placas, marca, modelo, fecha_adquisicion, estatus, fecha_alta, color, combus
                   <td><?php echo $EquipoDetails['marca'] ?></td>
                   <td><?php echo $EquipoDetails['modelo'] ?></td>
                   <td><?php echo $EquipoDetails['fecha_adquisicion'] ?></td>
-                  <td ><?php echo $EquipoDetails['estatus'] ?></td>
                   <td><?php echo $EquipoDetails['fecha_alta'] ?></td>
-                  <td><?php echo $EquipoDetails['color'] ?></td>
+                  <td>
+                  <input type="color" style="WIDTH: 122%;" class="form-control form-control-color" disabled id="exampleColorInput" value="<?php echo $EquipoDetails['color'] ?>" >
+                  </td>
                   <td><?php echo $EquipoDetails['combustible'] ?></td>
+
+                  <td >
+                 <form  method="POST" action="evaluacion_equipo.php"  enctype="multipart/form-data" >
+
+                <select id="inputState" class="form-control" required name="inputEstatus">
+                <option hidden selected>      <?php echo $EquipoDetails['estatus'] ?></option>
+                <option>Enviado  </option>
+                <option>Asignado</option>
+                <option>Disponible</option>
+                <option>Baja</option>
+               
+                  </td>
+
+
                   <td>
 
-                    <form  method="GET" action="includes/formatos/formatoEditarP.php" enctype="multipart/form-data" >
-                      <input type="hidden" name="idp" value="<?php echo $EquipoDetails['id'] ?>" />
+
+          <input type="hidden" name="inputId" value="<?php echo $EquipoDetails['id'] ?>" />
 
 
-                      <input type ="hidden" name="tabla"  value=" <?php echo 'propiedad' ?>"/>
-                      <input type="submit"  class="btn btn-warning" name="btneditarP" value="Editar" />
-
-          </td>
-                      </form>
+          <input type="submit" class=" btn btn-warning" name="btnEditar"  value="Editar" id="submit" />
+          </form>
                 </tr>
 
               </tbody>

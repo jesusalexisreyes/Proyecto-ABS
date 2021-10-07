@@ -8,7 +8,7 @@ if (isset($_GET['pageno'])) {
 } else {
     $pageno = 1;
 }
-$no_of_records_per_page = 5;
+$no_of_records_per_page = 10;
 $offset = ($pageno-1) * $no_of_records_per_page;
 
 
@@ -91,23 +91,19 @@ $EquipoDetails = mysqli_fetch_assoc($resQueryGetEquipo);
 
       <section class="section about-me"style="width: 65%;" data-section="section1">
         <div class="container">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<input type="button" name="e" value="e" id="idn1">
-<input type="button" name="e" value="e" id="idn2">
-<input type="button" name="e" value="e" id="idn3">
-<input type="button" name="e" value="e" id="idn4">
+
           <div class="section-heading">
 
-            <h2>Registra equipos nuevos</h2>
+            <h2>Verifica los equipos</h2>
             <div class="line-dec"></div>
-            <span>En esta seccion podras dar de alta equipos nuevos.</span>
+            <span>En esta seccion podras ver los quipos.</span>
           </div>
        <div class="right-image-post">
         <div class="" >
 
 
 
-          <div class="table-striped table-responsive table-sm "style=" border-radius: 9px; background: aliceblue; ">
+          <div class="table-striped table-responsive table-sm "style=" border-radius: 9px; background: aliceblue; padding: 10px ">
 
 
             <table  class="table table-striped breadcrumb-section "   >
@@ -135,13 +131,18 @@ $EquipoDetails = mysqli_fetch_assoc($resQueryGetEquipo);
                   <td ><?php echo $EquipoDetails['estatus'] ?></td>
                   <td>
               <!-- <button button class="alert alert-warning" type="submit" id="submit"data-toggle="modal" data-target="#formatoRpropiedades" >REGISTRAR</button> -->
-          <form  method="POST"  enctype="multipart/form-data" >
-          <input type="hidden" name="idp" value="<?php echo $EquipoDetails['id'] ?>" />
+          <form  method="POST" action="informacionEquipo.php"  enctype="multipart/form-data" >
+          <input type="hidden" name="inputPlacas" value="<?php echo $EquipoDetails['placas'] ?>" />
+          <input type="hidden" name="inputMarca" value="<?php echo $EquipoDetails['marca'] ?>" />
+          <input type="hidden" name="inputModelo" value="<?php echo $EquipoDetails['modelo'] ?>" />
+          <input type="hidden" name="inputFecha_aquisicion" value="<?php echo $EquipoDetails['fecha_adquisicion'] ?>" />
+          <input type="hidden" name="inputEstatus" value="<?php echo $EquipoDetails['estatus'] ?>" />
+          <input type="hidden" name="inputFechaAlta" value="<?php echo $EquipoDetails['fecha_alta'] ?>" />
+          <input type="hidden" name="inputColor" value="<?php echo $EquipoDetails['color'] ?>" />
+          <input type="hidden" name="inputTipoCombustible" value="<?php echo $EquipoDetails['combustible'] ?>" />
 
-
-          <input type ="hidden" name="tabla"  value=" <?php echo 'propiedad' ?>"/>
-          <input type="submit" class="btn btn-danger" name="btneliminar" href="<?php echo "listado_equipos.php?valor=1".$EquipoDetails['estatus'] ?>" value="Eliminar" id="submit" data-toggle="modal"  data-target="#formatoRpropiedades"/>
-
+          <input type="submit" class="btn btn-secondary" name="btneliminar"  value="Ver informacion" id="submit" />
+          </form>
           </td>
                    
                 </tr>
@@ -154,19 +155,7 @@ $EquipoDetails = mysqli_fetch_assoc($resQueryGetEquipo);
 
 
           </div>
-          <nav style="padding: 20px;" aria-label="Page navigation example">
 
-              <ul class="pagination justify-content-center">
-                  <li class="page-item"><a style="color:#2b2825;" class="page-link"href="?pageno=1">Primero</a></li>
-                  <li class="<?php if($pageno <= 1){ echo 'disabled'; } ?> page-item">
-                      <a style="color:#2b2825;" class="page-link" href="<?php if($pageno <= 1){ echo '#'; } else { echo "?pageno=".($pageno - 1); } ?>">Anterior</a>
-                  </li class="page-item">
-                  <li class="<?php if($pageno >= $total_pages){ echo 'disabled'; } ?> page-item">
-                      <a style="color:#2b2825;" class="page-link"  href="<?php if($pageno >= $total_pages){ echo '#'; } else { echo "?pageno=".($pageno + 1); } ?>">Siguiente</a>
-                  </li>
-                  <li class="page-item"><a style="color:#2b2825;" class="page-link" href="?pageno=<?php echo $total_pages; ?>">Ultimo</a></li>
-              </ul>
-            </nav>
 
 
 

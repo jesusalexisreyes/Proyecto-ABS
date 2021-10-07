@@ -144,18 +144,18 @@ $total_pages = ceil($total_rows / $no_of_records_per_page);
 
           <div class="form-group ">
 
-            <label for="inputPlacas">Placas</label>
+            <label style="font-size: x-large; color: white;" for="inputPlacas">Placas</label>
             <input type="text" class="form-control" id="inputPlacas" name="inputPlacas" placeholder="Placas" required>
           </div>
 
           <div class="form-row">
             <div class="form-group col-md-6">
-              <label for="inputMarca">Marca</label>
+              <label style="font-size: x-large; color: white;"  for="inputMarca">Marca</label>
               <input type="text" class="form-control" id="inputMarca" name="inputMarca" placeholder="Marca" required>
             </div>
 
             <div class="form-group col-md-6">
-              <label for="inputModelo">Modelo</label>
+              <label style="font-size: x-large; color: white;"  for="inputModelo">Modelo</label>
               <input type="text" class="form-control" id="inputModelo" name="inputModelo" placeholder="Modelo" required>
             </div>
           </div>
@@ -163,14 +163,14 @@ $total_pages = ceil($total_rows / $no_of_records_per_page);
           <div class="form-row">
 
            <div class="form-group col-md-6">
-            <label for="inputColor">Color del equipo</label  required>
+            <label style="font-size: x-large; color: white;"  for="inputColor">Color del equipo</label  required>
             <br>
             <input type="color" name="inputColor">
 
            </div>
 
             <div class="form-group col-md-6">
-              <label for="inputModelo">Tipo de combustible</label>
+              <label style="font-size: x-large; color: white;"  for="inputModelo">Tipo de combustible</label>
               <select id="inputState" class="form-control" required name="inputTipoCombustible">
                 <option hidden selected>Selecciona una opcion</option>
                 <option>Gasolina</option>
@@ -180,18 +180,14 @@ $total_pages = ceil($total_rows / $no_of_records_per_page);
 
           <div class="form-row">
             <div class="form-group col-md-6">
-              <label for="inputFechaAlta">Fecha de alta</label >
+              <label style="font-size: x-large; color: white;"  for="inputFechaAlta">Fecha de alta</label >
               <input type="date" class="form-control" id="inputFechaAlta" name="inputFechaAlta" required >
             </div>
             <div class="form-group col-md-6">
-              <label for="inputState">Estatus</label>
+             
 
-              <select id="inputState" class="form-control" required name="inputEstatus">
-                <option hidden selected>Selecciona una opcion</option>
-                <option>Enviado  </option>
-                <option>Asignado</option>
-                <option>Disponible</option>
-                <option>Baja</option>
+              <select hidden  id="inputState" value="Enviado" class="form-control" required name="inputEstatus">
+                <option hidden  selected>Enviado</option>
               </select>
             </div>
 

@@ -1,0 +1,5 @@
+
+$server = "localhost";
+$bd = "Proyecto abs";
+$user = "alexis";
+$pass = "1234";
